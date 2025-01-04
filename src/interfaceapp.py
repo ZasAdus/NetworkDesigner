@@ -14,9 +14,7 @@ class Interface:
         
         self.canvas = tk.Canvas(self.root, bg="white", width=800, height=600)
         self.canvas.pack()
-        
-        self.devices = []
-        self.draw_network()
+        #Ahh shit here we go
 
 
 
