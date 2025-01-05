@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Interface beginning">
+    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Now to backend">
+      <change beforePath="$PROJECT_DIR$/.idea/NetworkDesigner.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NetworkDesigner.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_01_2025_21_09_[Changes]/shelved.patch" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_01_2025_21_09_[Changes]/shelved.patch" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_01_2025_21_09__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_04_01_2025_21_09__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/icons/computer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/icons/router.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/icons/switch.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaceapp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/qt_designer/screen.ui" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/screen.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,27 +55,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.interfaceapp.executor&quot;: &quot;Run&quot;,
-    &quot;Python.mac.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.screen.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.interfaceapp.executor": "Run",
+    "Python.mac.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.screen.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src" />
       <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src\qt_designer" />
       <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src\qml" />
-      <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src" />
     </key>
   </component>
   <component name="RunManager" selected="Python.screen">
@@ -175,7 +179,11 @@
       <workItem from="1736074144283" duration="1377000" />
       <workItem from="1736075556180" duration="296000" />
       <workItem from="1736105561604" duration="2614000" />
-      <workItem from="1736108987685" duration="60000" />
+      <workItem from="1736108987685" duration="783000" />
+      <workItem from="1736112933961" duration="1054000" />
+      <workItem from="1736114003627" duration="70000" />
+      <workItem from="1736114251570" duration="58000" />
+      <workItem from="1736114315226" duration="1756000" />
     </task>
     <task id="LOCAL-00001" summary="Base commit">
       <option name="closed" value="true" />
@@ -209,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736075835347</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Now to backend">
+      <option name="closed" value="true" />
+      <created>1736109074569</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1736109074569</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,12 +235,13 @@
     <MESSAGE value="Base commit" />
     <MESSAGE value="Python updated, PyQt6 added" />
     <MESSAGE value="Interface beginning" />
-    <option name="LAST_COMMIT_MESSAGE" value="Interface beginning" />
+    <MESSAGE value="Now to backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Now to backend" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NetworkDesigner$interfaceapp.coverage" NAME="interfaceapp Coverage Results" MODIFIED="1736075581704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736107306584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/NetworkDesigner$screen.coverage" NAME="screen Coverage Results" MODIFIED="1736108891732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736114010820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$screen.coverage" NAME="screen Coverage Results" MODIFIED="1736116042323" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$mac.coverage" NAME="mac Coverage Results" MODIFIED="1736073262048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
