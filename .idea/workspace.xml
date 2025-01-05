@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Base commit">
-      <change beforePath="$PROJECT_DIR$/.idea/NetworkDesigner.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/NetworkDesigner.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Python updated, PyQt6 added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/computer.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/computer.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/router.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/router.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/icons/switch.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/switch.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/interfaceapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaceapp.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mac.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mac.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,12 +28,12 @@
     &quot;assignee&quot;: &quot;ZasAdus&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/ZasAdus/NetworkDesigner.git",
-    "accountId": "3acec989-5d09-4edc-9c6a-b46b364e37b2"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ZasAdus/NetworkDesigner.git&quot;,
+    &quot;accountId&quot;: &quot;3acec989-5d09-4edc-9c6a-b46b364e37b2&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -41,18 +44,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.interfaceapp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mac.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="interfaceapp" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="NetworkDesigner" />
@@ -96,7 +107,11 @@
       <option name="presentableId" value="Default" />
       <updated>1736021028441</updated>
       <workItem from="1736021029782" duration="2000" />
-      <workItem from="1736072055600" duration="1013000" />
+      <workItem from="1736072055600" duration="1436000" />
+      <workItem from="1736073564084" duration="460000" />
+      <workItem from="1736074036451" duration="57000" />
+      <workItem from="1736074144283" duration="1377000" />
+      <workItem from="1736075556180" duration="25000" />
     </task>
     <task id="LOCAL-00001" summary="Base commit">
       <option name="closed" value="true" />
@@ -114,7 +129,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736021502902</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Python updated, PyQt6 added">
+      <option name="closed" value="true" />
+      <created>1736073108747</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736073108747</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -122,6 +145,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Base commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Base commit" />
+    <MESSAGE value="Python updated, PyQt6 added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Python updated, PyQt6 added" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/NetworkDesigner$interfaceapp.coverage" NAME="interfaceapp Coverage Results" MODIFIED="1736075488485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736073495363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$mac.coverage" NAME="mac Coverage Results" MODIFIED="1736073262048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

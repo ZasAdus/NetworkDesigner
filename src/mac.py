@@ -4,18 +4,22 @@ from database import Database
 
 class MAC:
     def __init__(self):
-        self.address = self.generate_mac()
+        self.address = None
 
-    def generate_mac(self):
-        mac = [random.randint(0x00, 0xFF) for _ in range(6)]
-        return ':'.join(f'{octet:02x}' for octet in mac) if mac else None
+    @staticmethod
+    def _format_mac_address(address):
+        return ':'.join(f'{x:02x}' for x in address)
 
     @staticmethod
     def generate_unique_mac(device_type=None, device_id=None):
-        address = MAC().generate_mac()
-        while Database.mac_exists(address) or not address:
-            address = MAC().generate_mac()
-        return address
+        while True:
+            address = [random.randint(0x00, 0xFF) for _ in range(6)]
+            if not address:
+                continue
+
+            mac_str = MAC._format_mac_address(address)
+            if not Database.mac_exists(mac_str):
+                return mac_str
 
     def get_address(self):
         return self.address
