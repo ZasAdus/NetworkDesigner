@@ -1,21 +1,74 @@
-from mac import MAC as mac
-import ipaddress as ip
-from router import Router
-from switch import Switch
-from computer import Computer
+# main.py
+import os
+import sys
+from pathlib import Path
+from PyQt6.QtQml import QQmlApplicationEngine
+from PyQt6.QtGui import QGuiApplication
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot, QVariant
 from database import Database
 
-Database.initialize()
 
-router1 = Router(x=10, y=20)
-router1.set_interface_router(1, "192.168.2.1", 30, 10)
+class NetworkBackend(QObject):
+    # Signal to notify QML about new device
+    deviceCreated = pyqtSignal(str, int, float, float, arguments=['type', 'id', 'x', 'y'])
 
-switch1 = Switch(x=30, y=40)
-switch1.set_interface_switch(1, [10, 20], 'trunk')
+    def __init__(self):
+        super().__init__()
+        Database.initialize()
+        self.devices = {}
 
-computer1 = Computer(x=50, y=60)
-computer1.set_interface_computer("192.168.2.2", "30")
+    @pyqtSlot(str, float, float, result=bool)
+    def create_device(self, device_type: str, x: float, y: float) -> bool:
+        try:
+            if device_type == "router":
+                from router import Router
+                device = Router(x=int(x), y=int(y))
+            elif device_type == "switch":
+                from switch import Switch
+                device = Switch(x=int(x), y=int(y))
+            elif device_type == "computer":
+                from computer import Computer
+                device = Computer(x=int(x), y=int(y))
+            else:
+                return False
 
-devices = Database.get_devices()
-for device in devices:
-    print(device)
+            self.devices[device.device_id] = device
+            # Emit signal with device info
+            self.deviceCreated.emit(device_type, device.device_id, x, y)
+            return True
+        except Exception as e:
+            print(f"Error creating device: {e}")
+            return False
+
+    @pyqtSlot(result=list)
+    def get_devices(self):
+        return Database.get_devices()
+
+
+def main():
+    app = QGuiApplication(sys.argv)
+
+    # Create QML engine
+    engine = QQmlApplicationEngine()
+
+    # Create and expose backend to QML
+    backend = NetworkBackend()
+    engine.rootContext().setContextProperty("backend", backend)
+
+    # Set up icon path
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    icon_path = os.path.join(current_dir, "qml")
+    engine.addImportPath(icon_path)
+
+    # Load QML file
+    qml_file = os.path.join(current_dir, "qml/MainWindow.qml")
+    engine.load(qml_file)
+
+    if not engine.rootObjects():
+        sys.exit(-1)
+
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

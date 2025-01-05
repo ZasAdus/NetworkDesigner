@@ -4,19 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Python updated, PyQt6 added">
+    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Interface beginning">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/computer.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/computer.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/router.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/router.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/icons/switch.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/icons/switch.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interfaceapp.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/interfaceapp.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mac.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/mac.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/computer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/router.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/icons/switch.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/interfaceapp.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,6 +56,7 @@
     &quot;Python.interfaceapp.executor&quot;: &quot;Run&quot;,
     &quot;Python.mac.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.screen.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -61,10 +69,12 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src\qt_designer" />
+      <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src\qml" />
       <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.screen">
     <configuration name="interfaceapp" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="NetworkDesigner" />
       <option name="ENV_FILES" value="" />
@@ -89,6 +99,58 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NetworkDesigner" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="screen" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="NetworkDesigner" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/screen.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.screen" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -111,7 +173,9 @@
       <workItem from="1736073564084" duration="460000" />
       <workItem from="1736074036451" duration="57000" />
       <workItem from="1736074144283" duration="1377000" />
-      <workItem from="1736075556180" duration="25000" />
+      <workItem from="1736075556180" duration="296000" />
+      <workItem from="1736105561604" duration="2614000" />
+      <workItem from="1736108987685" duration="60000" />
     </task>
     <task id="LOCAL-00001" summary="Base commit">
       <option name="closed" value="true" />
@@ -137,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736073108747</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Interface beginning">
+      <option name="closed" value="true" />
+      <created>1736075835346</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736075835347</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,11 +218,13 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Base commit" />
     <MESSAGE value="Python updated, PyQt6 added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Python updated, PyQt6 added" />
+    <MESSAGE value="Interface beginning" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interface beginning" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/NetworkDesigner$interfaceapp.coverage" NAME="interfaceapp Coverage Results" MODIFIED="1736075488485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736073495363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$interfaceapp.coverage" NAME="interfaceapp Coverage Results" MODIFIED="1736075581704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736107306584" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$screen.coverage" NAME="screen Coverage Results" MODIFIED="1736108891732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$mac.coverage" NAME="mac Coverage Results" MODIFIED="1736073262048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>
