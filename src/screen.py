@@ -7,7 +7,11 @@
 
 
 from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QSpacerItem, QSizePolicy
+
+from controller import Controller
 
 
 class Ui_MainWindow(object):
@@ -17,7 +21,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(parent=self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 70, 101, 241))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 70, 101, 300))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -35,12 +39,14 @@ class Ui_MainWindow(object):
         self.router_icon.setStyleSheet("""
             QPushButton {
                 border: none;
-                padding: 0;
+                padding: 5;
                 background: transparent;
                 text-align: center;
             }
         """)
+        self.router_icon.clicked.connect(lambda: Controller.picked_device("router"))
         self.verticalLayout.addWidget(self.router_icon)
+
         self.label = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.label.setObjectName("label")
@@ -53,11 +59,12 @@ class Ui_MainWindow(object):
         self.switch_icon.setStyleSheet("""
             QPushButton {
                 border: none;
-                padding: 0;
+                padding: 5;
                 background: transparent;
                 text-align: center;
             }
         """)
+        self.switch_icon.clicked.connect(lambda: Controller.picked_device("switch"))
         self.verticalLayout.addWidget(self.switch_icon)
 
         self.label_2 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
@@ -77,11 +84,27 @@ class Ui_MainWindow(object):
                 text-align: center;
             }
         """)
+        self.computer_icon.clicked.connect(lambda: Controller.picked_device("computer"))
         self.verticalLayout.addWidget(self.computer_icon)
+
         self.label_3 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
         self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
         self.label_3.setObjectName("label_3")
         self.verticalLayout.addWidget(self.label_3)
+
+        self.connectButton = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
+        self.connectButton.setText("Connect Devices")
+        self.connectButton.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        self.verticalLayout.addWidget(self.connectButton)
+        self.connectButton.clicked.connect(Controller.connect_button)
+
+        self.clearButton = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
+        self.clearButton.setText("Clear Design")
+        self.clearButton.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
+        self.verticalLayout.addWidget(self.clearButton)
+        self.clearButton.clicked.connect(Controller.clear_button)
+
+
         self.horizontalLayoutWidget = QtWidgets.QWidget(parent=self.centralwidget)
         self.horizontalLayoutWidget.setGeometry(QtCore.QRect(270, 10, 301, 31))
         self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
@@ -89,6 +112,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.design_mode = QtWidgets.QRadioButton(parent=self.horizontalLayoutWidget)
+        self.design_mode.setChecked(True)
         self.design_mode.setObjectName("design_mode")
         self.horizontalLayout.addWidget(self.design_mode)
         self.configure_mode = QtWidgets.QRadioButton(parent=self.horizontalLayoutWidget)
@@ -108,7 +132,7 @@ class Ui_MainWindow(object):
         self.bottom_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
         self.bottom_canva.setObjectName("bottom_canva")
         self.left_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
-        self.left_canva.setGeometry(QtCore.QRect(0, -9, 101, 581))
+        self.left_canva.setGeometry(QtCore.QRect(0, -1, 101, 581))
         self.left_canva.setObjectName("left_canva")
         self.left_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
         self.top_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
@@ -116,10 +140,11 @@ class Ui_MainWindow(object):
         self.top_canva.setObjectName("top_canva")
         self.top_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
         self.main_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
-        self.main_canva.setGeometry(QtCore.QRect(95, 41, 711, 491))
+        self.main_canva.setGeometry(QtCore.QRect(89, 39, 711, 492))
         self.main_canva.setObjectName("main_canva")
         self.main_canva.setStyleSheet("background-color: white;")
         self.main_canva.raise_()
+        Controller.initialize(self.main_canva, self)
         self.left_canva.raise_()
         self.top_canva.raise_()
         self.bottom_canva.raise_()
@@ -135,9 +160,19 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+        Controller.initialize(self.main_canva, self)
+
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "NetworkDesigner"))
         self.label_4.setText(_translate("MainWindow", "Devices:"))
         self.label.setText(_translate("MainWindow", "Router"))
         self.label_2.setText(_translate("MainWindow", "Switch"))
