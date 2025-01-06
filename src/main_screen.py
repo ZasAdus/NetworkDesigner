@@ -7,9 +7,8 @@
 
 
 from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QSpacerItem, QSizePolicy
+from PyQt6.QtWidgets import QSizePolicy
 
 from controller import Controller
 
