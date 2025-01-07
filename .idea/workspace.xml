@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Configure mode seems working">
+    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="Another day of debbuging">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/computer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/computer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/configuration.py" afterDir="false" />
@@ -12,8 +12,6 @@
       <change beforePath="$PROJECT_DIR$/src/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main_screen.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/switch.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/switch.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +27,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -45,7 +42,7 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/controller.py" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/database.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/database.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main_screen.py" root0="SKIP_INSPECTION" />
   </component>
   <component name="ProjectColorInfo">{
@@ -222,7 +219,8 @@
       <workItem from="1736199705371" duration="6040000" />
       <workItem from="1736251124293" duration="5283000" />
       <workItem from="1736257492282" duration="2100000" />
-      <workItem from="1736261719771" duration="2679000" />
+      <workItem from="1736261719771" duration="4054000" />
+      <workItem from="1736271443070" duration="581000" />
     </task>
     <task id="LOCAL-00001" summary="Base commit">
       <option name="closed" value="true" />
@@ -304,7 +302,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736205779818</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Another day of debbuging">
+      <option name="closed" value="true" />
+      <created>1736264944391</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1736264944391</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,7 +325,8 @@
     <MESSAGE value="Adding icons" />
     <MESSAGE value="Design mode is working" />
     <MESSAGE value="Configure mode seems working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Configure mode seems working" />
+    <MESSAGE value="Another day of debbuging" />
+    <option name="LAST_COMMIT_MESSAGE" value="Another day of debbuging" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NetworkDesigner$screentest.coverage" NAME="screentest Coverage Results" MODIFIED="1736175428986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
@@ -327,6 +334,6 @@
     <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736114010820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$screen.coverage" NAME="screen Coverage Results" MODIFIED="1736191156449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$mac.coverage" NAME="mac Coverage Results" MODIFIED="1736073262048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/NetworkDesigner$main_screen.coverage" NAME="main_screen Coverage Results" MODIFIED="1736264636831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main_screen.coverage" NAME="main_screen Coverage Results" MODIFIED="1736272009686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

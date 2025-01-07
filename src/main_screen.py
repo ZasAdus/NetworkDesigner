@@ -75,25 +75,24 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
 
-        self.computer_icon = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
-        self.computer_icon.setIcon(QIcon("icons/computer.png"))
-        self.computer_icon.setIconSize(self.computer_icon.size())
-        self.computer_icon.setObjectName("computer_icon")
-        self.computer_icon.setStyleSheet("""
-            QPushButton {
-                border: none;
-                padding: 0;
-                background: transparent;
-                text-align: center;
-            }
-        """)
-        self.computer_icon.clicked.connect(lambda: Controller.picked_device("computer"))
-        self.verticalLayout.addWidget(self.computer_icon)
-
-        self.label_3 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
-        self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout.addWidget(self.label_3)
+        # self.computer_icon = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
+        # self.computer_icon.setIcon(QIcon("icons/computer.png"))
+        # self.computer_icon.setIconSize(self.computer_icon.size())
+        # self.computer_icon.setObjectName("computer_icon")
+        # self.computer_icon.setStyleSheet("""
+        #     QPushButton {
+        #         border: none;
+        #         padding: 0;
+        #         background: transparent;
+        #         text-align: center;
+        #     }
+        # """)
+        # self.computer_icon.clicked.connect(lambda: Controller.picked_device("computer"))
+        # self.verticalLayout.addWidget(self.computer_icon)
+        # self.label_3 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
+        # self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
+        # self.label_3.setObjectName("label_3")
+        # self.verticalLayout.addWidget(self.label_3)
 
         self.connectButton = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         self.connectButton.setText("Connect Devices")
@@ -179,7 +178,7 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Devices:"))
         self.label.setText(_translate("MainWindow", "Router"))
         self.label_2.setText(_translate("MainWindow", "Switch"))
-        self.label_3.setText(_translate("MainWindow", "Computer"))
+        # self.label_3.setText(_translate("MainWindow", "Computer"))
         self.design_mode.setText(_translate("MainWindow", "Design"))
         self.configure_mode.setText(_translate("MainWindow", "Configure"))
         self.test_mode.setText(_translate("MainWindow", "Test"))

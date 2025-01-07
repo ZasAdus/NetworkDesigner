@@ -26,9 +26,9 @@ class PortInfoTab(QWidget):
         device_id = self.device_instance.device_id
         device_type = self.device_instance.device_type
         connections = Database.get_device_connections(device_id)
-        if device_type == "computer":
-            self.populate_computer_ports(connections)
-        elif device_type == "router":
+        # if device_type == "computer":
+        #     self.populate_computer_ports(connections)
+        if device_type == "router":
             self.populate_router_ports(connections)
         elif device_type == "switch":
             self.populate_switch_ports(connections)
@@ -39,27 +39,27 @@ class PortInfoTab(QWidget):
             (device_id,)
         ).fetchone()[0]
 
-    def populate_computer_ports(self, connections):
-        self.table.setRowCount(1)
-        port_info = Database.cursor.execute(
-            "SELECT mac_address, ip_address, subnet_mask FROM computer_ports WHERE device_id = ?",
-            (self.device_instance.device_id,)
-        ).fetchone()
-
-        if port_info:
-            mac, ip, subnet = port_info
-            config_str = f"IP: {ip if ip else 'Not set'}\nSubnet: {subnet if subnet else 'Not set'}"
-        else:
-            mac, config_str = "N/A", "Not configured"
-
-        connected_to = "Not connected"
-        if connections:
-            for conn in connections:
-                other_device_id = conn[2] if conn[1] == self.device_instance.device_id else conn[1]
-                other_device_type = self.get_device_info(other_device_id)
-                connected_to = f"{other_device_type.capitalize()} (ID: {other_device_id})"
-
-        self.add_port_row(0, 1, connected_to, mac, config_str)
+    # def populate_computer_ports(self, connections):
+    #     self.table.setRowCount(1)
+    #     port_info = Database.cursor.execute(
+    #         "SELECT mac_address, ip_address, subnet_mask FROM computer_ports WHERE device_id = ?",
+    #         (self.device_instance.device_id,)
+    #     ).fetchone()
+    #
+    #     if port_info:
+    #         mac, ip, subnet = port_info
+    #         config_str = f"IP: {ip if ip else 'Not set'}\nSubnet: {subnet if subnet else 'Not set'}"
+    #     else:
+    #         mac, config_str = "N/A", "Not configured"
+    #
+    #     connected_to = "Not connected"
+    #     if connections:
+    #         for conn in connections:
+    #             other_device_id = conn[2] if conn[1] == self.device_instance.device_id else conn[1]
+    #             other_device_type = self.get_device_info(other_device_id)
+    #             connected_to = f"{other_device_type.capitalize()} (ID: {other_device_id})"
+    #
+    #     self.add_port_row(0, 1, connected_to, mac, config_str)
 
     def populate_router_ports(self, connections):
         self.table.setRowCount(4)
@@ -133,9 +133,9 @@ class ConfigurationDialog(QDialog):
         tab_widget = QTabWidget()
         config_tab = QWidget()
         config_layout = QVBoxLayout()
-        if self.device_instance.device_type == "computer":
-            self.setup_computer_config(config_layout)
-        elif self.device_instance.device_type == "router":
+        # if self.device_instance.device_type == "computer":
+        #     self.setup_computer_config(config_layout)
+        if self.device_instance.device_type == "router":
             self.setup_router_config(config_layout)
         elif self.device_instance.device_type == "switch":
             self.setup_switch_config(config_layout)
@@ -147,18 +147,18 @@ class ConfigurationDialog(QDialog):
         layout.addWidget(tab_widget)
         self.setLayout(layout)
 
-    def setup_computer_config(self, layout):
-        grid = QGridLayout()
-        grid.addWidget(QLabel("IP Address:"), 0, 0)
-        self.ip_input = QLineEdit()
-        grid.addWidget(self.ip_input, 0, 1)
-        grid.addWidget(QLabel("Subnet Mask:"), 1, 0)
-        self.subnet_input = QLineEdit()
-        grid.addWidget(self.subnet_input, 1, 1)
-        layout.addLayout(grid)
-        apply_btn = QPushButton("Apply Configuration")
-        apply_btn.clicked.connect(self.apply_computer_config)
-        layout.addWidget(apply_btn)
+    # def setup_computer_config(self, layout):
+    #     grid = QGridLayout()
+    #     grid.addWidget(QLabel("IP Address:"), 0, 0)
+    #     self.ip_input = QLineEdit()
+    #     grid.addWidget(self.ip_input, 0, 1)
+    #     grid.addWidget(QLabel("Subnet Mask:"), 1, 0)
+    #     self.subnet_input = QLineEdit()
+    #     grid.addWidget(self.subnet_input, 1, 1)
+    #     layout.addLayout(grid)
+    #     apply_btn = QPushButton("Apply Configuration")
+    #     apply_btn.clicked.connect(self.apply_computer_config)
+    #     layout.addWidget(apply_btn)
 
     def setup_router_config(self, layout):
         grid = QGridLayout()
@@ -204,15 +204,15 @@ class ConfigurationDialog(QDialog):
         apply_btn.clicked.connect(self.apply_switch_config)
         layout.addWidget(apply_btn)
 
-    def apply_computer_config(self):
-        ip_address = self.ip_input.text()
-        subnet_mask = self.subnet_input.text()
-
-        if self.device_instance.set_interface_computer(ip_address, subnet_mask):
-            QMessageBox.information(self, "Success", "Configuration applied successfully")
-            self.accept()
-        else:
-            QMessageBox.warning(self, "Error", "Invalid IP address or subnet mask")
+    # def apply_computer_config(self):
+    #     ip_address = self.ip_input.text()
+    #     subnet_mask = self.subnet_input.text()
+    #
+    #     if self.device_instance.set_interface_computer(ip_address, subnet_mask):
+    #         QMessageBox.information(self, "Success", "Configuration applied successfully")
+    #         self.accept()
+    #     else:
+    #         QMessageBox.warning(self, "Error", "Invalid IP address or subnet mask")
 
     def apply_router_config(self):
         port = self.port_select.value()

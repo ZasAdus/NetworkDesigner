@@ -171,13 +171,13 @@ class Database:
         ''', (device_id, port_number, mac_address, vlan, port_type))
         Database.connection.commit()
 
-    @staticmethod
-    def insert_port_computer(device_id, mac_address, ip_address=None, subnet_mask=None):
-        Database.cursor.execute('''
-            INSERT INTO computer_ports (device_id, mac_address, ip_address, subnet_mask)
-            VALUES (?, ?, ?, ?)
-        ''', (device_id, mac_address, ip_address, subnet_mask))
-        Database.connection.commit()
+    # @staticmethod
+    # def insert_port_computer(device_id, mac_address, ip_address=None, subnet_mask=None):
+    #     Database.cursor.execute('''
+    #         INSERT INTO computer_ports (device_id, mac_address, ip_address, subnet_mask)
+    #         VALUES (?, ?, ?, ?)
+    #     ''', (device_id, mac_address, ip_address, subnet_mask))
+    #     Database.connection.commit()
 
     @staticmethod
     def update_port_router(device_id, port_number, ip_address=None, subnet_mask=None, vlan=None):
@@ -200,16 +200,17 @@ class Database:
         ''', (vlan, port_type, device_id, port_number))
         Database.connection.commit()
 
-    @staticmethod
-    def update_port_computer(device_id, ip_address=None, subnet_mask=None):
-        Database.cursor.execute('''
-            UPDATE computer_ports
-            SET ip_address = ?,
-                subnet_mask = ?
-            WHERE device_id = ?
-        ''', (ip_address, subnet_mask, device_id))
-        Database.connection.commit()
+    # @staticmethod
+    # def update_port_computer(device_id, ip_address=None, subnet_mask=None):
+    #     Database.cursor.execute('''
+    #         UPDATE computer_ports
+    #         SET ip_address = ?,
+    #             subnet_mask = ?
+    #         WHERE device_id = ?
+    #     ''', (ip_address, subnet_mask, device_id))
+    #     Database.connection.commit()
 
+    @staticmethod
     def clear_all_tables():
         Database.cursor.execute('DELETE FROM devices')
         Database.cursor.execute('DELETE FROM router_ports')
@@ -260,7 +261,7 @@ class File:
                     for device in devices:
                         device_id, mac_address, device_type, x, y = device
                         try:
-                            new_device = Device(device_type, x, y, controller.Controller.scene)
+                            new_device = controller.Device(device_type, x, y, controller.Controller.scene)
                             device_map[device_id] = new_device
                         except Exception as e:
                             print(f"Error creating device {device_id}: {e}")

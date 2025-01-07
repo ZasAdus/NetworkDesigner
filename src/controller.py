@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import (QMessageBox, QPushButton, QGraphicsScene, QGraphics
                              QLabel)
 from PyQt6.QtGui import QIcon, QPen
 from PyQt6.QtCore import Qt
-from computer import Computer
+# from computer import Computer
 from router import Router
 from switch import Switch
 from database import Database, File
@@ -24,8 +24,8 @@ class Device:
                 self.device_instance = Router(x, y)
             elif device_type == "switch":
                 self.device_instance = Switch(x, y)
-            elif device_type == "computer":
-                self.device_instance = Computer(x, y)
+            # elif device_type == "computer":
+            #     self.device_instance = Computer(x, y)
             else:
                 raise ValueError(f"Invalid device type: {device_type}")
 
@@ -186,7 +186,7 @@ class Controller:
         buttons_enabled = ui.design_mode.isChecked()
         ui.router_icon.setEnabled(buttons_enabled)
         ui.switch_icon.setEnabled(buttons_enabled)
-        ui.computer_icon.setEnabled(buttons_enabled)
+        # ui.computer_icon.setEnabled(buttons_enabled)
         ui.connectButton.setEnabled(buttons_enabled)
         ui.clearButton.setEnabled(buttons_enabled)
 
@@ -237,7 +237,7 @@ class Controller:
     @staticmethod
     def connect_button():
         ui = Controller.ui_instance
-        buttons = [ui.router_icon, ui.switch_icon, ui.computer_icon]
+        buttons = [ui.router_icon, ui.switch_icon] #ui.computer_icon]
         for button in buttons:
             button.setStyleSheet("""
                 QPushButton {
@@ -260,15 +260,15 @@ class Controller:
             Controller.connection_mode = False
             Controller.main_canva.mousePressEvent = Controller.on_canvas_click
             ui = Controller.ui_instance
-            buttons = [ui.router_icon, ui.switch_icon, ui.computer_icon]
+            buttons = [ui.router_icon, ui.switch_icon] # ui.computer_icon]
             selected_button = None
 
             if device == "router":
                 selected_button = ui.router_icon
             elif device == "switch":
                 selected_button = ui.switch_icon
-            elif device == "computer":
-                selected_button = ui.computer_icon
+            # elif device == "computer":
+            #     selected_button = ui.computer_icon
 
             if selected_button:
                 Controller.highlight_device_button(selected_button, buttons)
