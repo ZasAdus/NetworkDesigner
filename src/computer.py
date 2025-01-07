@@ -10,7 +10,7 @@ class Computer:
         self.device_id = Database.get_next_device_id()
 
         mac_address = mac.generate_unique_mac('computer', self.device_id)
-        Database.insert_device(self.device_id, mac_address, None, 'computer', x, y)
+        Database.insert_device(self.device_id, mac_address, 'computer', x, y)
 
         port = mac.generate_unique_mac(None, self.device_id)
         Database.insert_port_computer(self.device_id, port)

@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from computer import Computer
 from router import Router
 from switch import Switch
-from database import Database
+from database import Database, File
 from configuration import ConfigurationDialog
 
 devices = []
@@ -15,51 +15,65 @@ class Device:
     devices_to_connect = []
 
     def __init__(self, device_type, x, y, scene):
-        self.device_type = device_type
-        self.x = x
-        self.y = y
-        self.scene = scene
-        if device_type == "router":
-            self.device_instance = Router(x, y)
-        elif device_type == "switch":
-            self.device_instance = Switch(x, y)
-        elif device_type == "computer":
-            self.device_instance = Computer(x, y)
+        try:
+            self.device_type = device_type
+            self.x = x
+            self.y = y
+            self.scene = scene
+            if device_type == "router":
+                self.device_instance = Router(x, y)
+            elif device_type == "switch":
+                self.device_instance = Switch(x, y)
+            elif device_type == "computer":
+                self.device_instance = Computer(x, y)
+            else:
+                raise ValueError(f"Invalid device type: {device_type}")
 
-        self.button = QPushButton()
-        self.button.resize(50, 50)
-        self.button.setIcon(QIcon(f"icons/{device_type.lower()}.png"))
-        self.button.setIconSize(self.button.size())
-        self.button.setStyleSheet("""
-            QPushButton {
-                border: none;
-                padding: 0;
-                background: transparent;
-                text-align: center;
-            }
-        """)
-        self.button.mousePressEvent = self.device_clicked
+            if hasattr(self.device_instance, 'device_id'):
+                self.button = QPushButton()
+                self.button.resize(50, 50)
+                self.button.setIcon(QIcon(f"icons/{device_type.lower()}.png"))
+                self.button.setIconSize(self.button.size())
+                self.button.setStyleSheet("""
+                    QPushButton {
+                        border: none;
+                        padding: 0;
+                        background: transparent;
+                        text-align: center;
+                    }
+                """)
+                self.button.mousePressEvent = self.device_clicked
 
-        self.id_label = QLabel(f"ID: {self.device_instance.device_id}")
-        self.id_label.setAlignment(Qt.AlignmentFlag.AlignBaseline)
-        self.id_label.setStyleSheet("""
-            QLabel {
-                background: transparent;
-                color: black;
-                font-size: 10px;
-                font-weight: bold;
-            }
-        """)
+                self.id_label = QLabel(f"ID: {self.device_instance.device_id}")
+                self.id_label.setAlignment(Qt.AlignmentFlag.AlignBaseline)
+                self.id_label.setStyleSheet("""
+                    QLabel {
+                        background: transparent;
+                        color: black;
+                        font-size: 10px;
+                        font-weight: bold;
+                    }
+                """)
 
-        self.id_proxy = scene.addWidget(self.id_label)
-        self.id_proxy.setZValue(1)
-        self.id_proxy.setPos(x, y + 50)
+                self.id_proxy = scene.addWidget(self.id_label)
+                self.id_proxy.setZValue(1)
+                self.id_proxy.setPos(x, y + 50)
 
-        self.button_proxy = scene.addWidget(self.button)
-        self.button_proxy.setZValue(3)
-        self.button_proxy.setPos(x, y)
+                self.button_proxy = scene.addWidget(self.button)
+                self.button_proxy.setZValue(3)
+                self.button_proxy.setPos(x, y)
 
-        devices.append(self)
+                devices.append(self)
+            else:
+                raise ValueError("Device instance creation failed")
+
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Failed to create device: {str(e)}")
+            if hasattr(self, 'button_proxy'):
+                scene.removeItem(self.button_proxy)
+            if hasattr(self, 'id_proxy'):
+                scene.removeItem(self.id_proxy)
+            raise
 
     def device_clicked(self, event):
         ui = Controller.ui_instance
@@ -151,7 +165,6 @@ class Controller:
 
     @staticmethod
     def initialize(main_canva, ui_instance):
-        Database.initialize()
         Controller.main_canva = main_canva
         Controller.scene = QGraphicsScene()
         Controller.main_canva.setScene(Controller.scene)
@@ -177,7 +190,6 @@ class Controller:
         ui.connectButton.setEnabled(buttons_enabled)
         ui.clearButton.setEnabled(buttons_enabled)
 
-        # Fix: Update button styles for all devices
         for device in devices:
             device.button.setStyleSheet("""
                 QPushButton {

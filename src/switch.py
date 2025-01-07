@@ -11,7 +11,7 @@ class Switch:
         self.interfaces = {}
 
         mac_address = mac.generate_unique_mac('switch', self.device_id)
-        Database.insert_device(self.device_id, mac_address, None, 'switch', x, y)
+        Database.insert_device(self.device_id, mac_address, 'switch', x, y)
 
         for port in range(1, number_of_ports + 1):
             port_mac = mac.generate_unique_mac(None, self.device_id)

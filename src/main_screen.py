@@ -10,13 +10,17 @@ from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QSizePolicy
 
-from controller import Controller
+from controller import Controller, Device
+from database import Database, File
+
+
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        Database.initialize(clear=True)
         self.centralwidget = QtWidgets.QWidget(parent=MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayoutWidget = QtWidgets.QWidget(parent=self.centralwidget)
@@ -123,9 +127,11 @@ class Ui_MainWindow(object):
         self.save_button = QtWidgets.QPushButton(parent=self.centralwidget)
         self.save_button.setGeometry(QtCore.QRect(700, 540, 93, 28))
         self.save_button.setObjectName("save_button")
+        self.save_button.clicked.connect(File.save_database_file)
         self.load_button = QtWidgets.QPushButton(parent=self.centralwidget)
         self.load_button.setGeometry(QtCore.QRect(600, 540, 93, 28))
         self.load_button.setObjectName("load_button")
+        self.load_button.clicked.connect(File.load_database_file)
         self.bottom_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
         self.bottom_canva.setGeometry(QtCore.QRect(0, 530, 801, 51))
         self.bottom_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
@@ -159,8 +165,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        Controller.initialize(self.main_canva, self)
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -181,6 +185,7 @@ class Ui_MainWindow(object):
         self.test_mode.setText(_translate("MainWindow", "Test"))
         self.save_button.setText(_translate("MainWindow", "save"))
         self.load_button.setText(_translate("MainWindow", "load"))
+
 
 
 if __name__ == "__main__":
