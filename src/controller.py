@@ -6,26 +6,24 @@ from PyQt6.QtCore import Qt
 from router import Router
 from switch import Switch
 from database import Database, File
-from configuration import ConfigurationDialog
 
 devices = []
-
 
 class Device:
     devices_to_connect = []
 
-    def __init__(self, device_type, x, y, scene):
+    def __init__(self, device_type, x, y, scene, device_id=None):
         try:
             self.device_type = device_type
             self.x = x
             self.y = y
             self.scene = scene
             if device_type == "router":
-                self.device_instance = Router(x, y)
+                self.device_instance = Router(x, y) if device_id is None else Router(x, y, device_id)
             elif device_type == "switch":
-                self.device_instance = Switch(x, y)
+                self.device_instance = Switch(x, y) if device_id is None else Switch(x, y, device_id)
             # elif device_type == "computer":
-            #     self.device_instance = Computer(x, y)
+            #     self.device_instance = Computer(x, y) if device_id is None else Computer(x, y, device_id)
             else:
                 raise ValueError(f"Invalid device type: {device_type}")
 

@@ -9,7 +9,7 @@
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QSizePolicy
-
+import sys
 from controller import Controller, Device
 from database import Database, File
 
@@ -130,7 +130,8 @@ class Ui_MainWindow(object):
         self.load_button = QtWidgets.QPushButton(parent=self.centralwidget)
         self.load_button.setGeometry(QtCore.QRect(600, 540, 93, 28))
         self.load_button.setObjectName("load_button")
-        self.load_button.clicked.connect(File.load_database_file)
+        self.load_button.isEnabled()
+        #self.load_button.clicked.connect(File.load_database_file)
         self.bottom_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
         self.bottom_canva.setGeometry(QtCore.QRect(0, 530, 801, 51))
         self.bottom_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
@@ -188,7 +189,6 @@ class Ui_MainWindow(object):
 
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()

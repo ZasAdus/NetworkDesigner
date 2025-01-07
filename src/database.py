@@ -227,79 +227,84 @@ class Database:
 
 
 class File:
-    def load_database_file(self):
-        try:
-            file_dialog = QFileDialog()
-            file_dialog.setNameFilter("Database files (*.db)")
-            file_dialog.setDefaultSuffix("db")
 
-            if file_dialog.exec():
-                selected_files = file_dialog.selectedFiles()
-                if selected_files:
-                    source_db_path = selected_files[0]
-                    if Database.connection:
-                        Database.connection.close()
-                        Database.connection = None
-                    if os.path.exists("network.db"):
-                        os.remove("network.db")
-                    shutil.copy(source_db_path, "network.db")
-                    Database.initialize()
-                    Database.cursor.execute("SELECT COUNT(*) FROM devices")
-                    device_count = Database.cursor.fetchone()[0]
-                    if device_count == 0:
-                        QMessageBox.warning(
-                            None,
-                            "Error",
-                            "No devices found in the selected database file."
-                        )
-                        return False
-                    controller.Controller.scene.clear()
-                    controller.Device.devices_to_connect.clear()
-                    devices = Database.get_devices()
-                    device_map = {}
-
-                    for device in devices:
-                        device_id, mac_address, device_type, x, y = device
-                        try:
-                            new_device = controller.Device(device_type, x, y, controller.Controller.scene)
-                            device_map[device_id] = new_device
-                        except Exception as e:
-                            print(f"Error creating device {device_id}: {e}")
-                    connections = Database.cursor.execute("SELECT * FROM connections").fetchall()
-
-                    for connection in connections:
-                        conn_id, device1_id, device2_id, device1_port, device2_port = connection
-                        if device1_id in device_map and device2_id in device_map:
-                            device1 = device_map[device1_id]
-                            device2 = device_map[device2_id]
-
-                            start_x = device1.x + 25
-                            start_y = device1.y + 25
-                            end_x = device2.x + 25
-                            end_y = device2.y + 25
-                            line = controller.Controller.scene.addLine(start_x, start_y, end_x, end_y)
-                            pen = QPen(Qt.GlobalColor.black)
-                            pen.setWidth(2)
-                            pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-                            pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
-                            pen.setStyle(Qt.PenStyle.SolidLine)
-                            line.setPen(pen)
-                            line.setZValue(2)
-                    controller.Controller.main_canva.viewport().update()
-                    QMessageBox.information(
-                        None,
-                        "Success",
-                        f"Successfully loaded {len(devices)} devices and {len(connections)} connections."
-                    )
-                    return True
-        except Exception as e:
-            QMessageBox.critical(
-                None,
-                "Error",
-                f"Failed to load network configuration: {str(e)}"
-            )
-            Database.initialize(clear=True)
-            return False
+    # def load_database_file(self):
+    #     try:
+    #         file_dialog = QFileDialog()
+    #         file_dialog.setNameFilter("Database files (*.db)")
+    #         file_dialog.setDefaultSuffix("db")
+    #
+    #         if file_dialog.exec():
+    #             selected_files = file_dialog.selectedFiles()
+    #             if selected_files:
+    #                 source_db_path = selected_files[0]
+    #                 if Database.connection:
+    #                     Database.connection.close()
+    #                     Database.connection = None
+    #                 if os.path.exists("network.db"):
+    #                     os.remove("network.db")
+    #                 shutil.copy(source_db_path, "network.db")
+    #                 Database.initialize()
+    #                 Database.cursor.execute("SELECT COUNT(*) FROM devices")
+    #                 device_count = Database.cursor.fetchone()[0]
+    #                 if device_count == 0:
+    #                     QMessageBox.warning(
+    #                         None,
+    #                         "Error",
+    #                         "No devices found in the selected database file."
+    #                     )
+    #                     return False
+    #
+    #                 controller.Controller.scene.clear()
+    #                 controller.devices.clear()
+    #                 controller.Device.devices_to_connect.clear()
+    #
+    #                 devices = Database.get_devices()
+    #                 device_map = {}
+    #
+    #                 for device in devices:
+    #                     device_id, mac_address, device_type, x, y = device
+    #                     try:
+    #                         new_device = controller.Device(device_type, x, y, controller.Controller.scene)
+    #                         device_map[device_id] = new_device
+    #                     except Exception as e:
+    #                         print(f"Error creating device {device_id}: {e}")
+    #
+    #                 connections = Database.cursor.execute("SELECT * FROM connections").fetchall()
+    #                 for connection in connections:
+    #                     conn_id, device1_id, device2_id, device1_port, device2_port = connection
+    #                     if device1_id in device_map and device2_id in device_map:
+    #                         device1 = device_map[device1_id]
+    #                         device2 = device_map[device2_id]
+    #
+    #                         start_x = device1.x + 25
+    #                         start_y = device1.y + 25
+    #                         end_x = device2.x + 25
+    #                         end_y = device2.y + 25
+    #                         line = controller.Controller.scene.addLine(start_x, start_y, end_x, end_y)
+    #                         pen = QPen(Qt.GlobalColor.black)
+    #                         pen.setWidth(2)
+    #                         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+    #                         pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+    #                         pen.setStyle(Qt.PenStyle.SolidLine)
+    #                         line.setPen(pen)
+    #                         line.setZValue(2)
+    #
+    #                 controller.Controller.main_canva.viewport().update()
+    #                 QMessageBox.information(
+    #                     None,
+    #                     "Success",
+    #                     f"Successfully loaded {len(devices)} devices and {len(connections)} connections."
+    #                 )
+    #                 return True
+    #     except Exception as e:
+    #         QMessageBox.critical(
+    #             None,
+    #             "Error",
+    #             f"Failed to load network configuration: {str(e)}"
+    #         )
+    #         Database.initialize(clear=True)
+    #         return False
 
     def save_database_file(self):
         try:
