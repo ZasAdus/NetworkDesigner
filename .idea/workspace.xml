@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="app without computer.py">
+    <list default="true" id="4bf02778-62f5-4023-b09c-aa4f22dc5582" name="Changes" comment="load button not working due duplication of the devices on canva while loading">
+      <change afterPath="$PROJECT_DIR$/src/README.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/network_validator.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/requirments.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/4r1s.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/computer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/computer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/configuration.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/configuration.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main_screen.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main_screen.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network.db" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,9 +46,12 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/controller.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/controller.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/database.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/src/main_screen.py" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -53,24 +63,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.interfaceapp.executor": "Run",
-    "Python.mac.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main_screen.executor": "Run",
-    "Python.screen.executor": "Run",
-    "Python.screentest.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.interfaceapp.executor&quot;: &quot;Run&quot;,
+    &quot;Python.mac.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_screen (1).executor&quot;: &quot;Run&quot;,
+    &quot;Python.main_screen.executor&quot;: &quot;Run&quot;,
+    &quot;Python.screen.executor&quot;: &quot;Run&quot;,
+    &quot;Python.screentest.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src" />
@@ -140,7 +151,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="C:\Users\dawid\Desktop\Studia\NetworkDesigner\src\main_screen.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/main_screen.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -218,7 +229,19 @@
       <workItem from="1736251124293" duration="5283000" />
       <workItem from="1736257492282" duration="2100000" />
       <workItem from="1736261719771" duration="4054000" />
-      <workItem from="1736271443070" duration="4423000" />
+      <workItem from="1736271443070" duration="4564000" />
+      <workItem from="1736276072155" duration="241000" />
+      <workItem from="1736280153077" duration="2122000" />
+      <workItem from="1736291018424" duration="426000" />
+      <workItem from="1736346148202" duration="3720000" />
+      <workItem from="1736360263146" duration="1125000" />
+      <workItem from="1736613984850" duration="1784000" />
+      <workItem from="1736618115400" duration="351000" />
+      <workItem from="1736621713387" duration="474000" />
+      <workItem from="1738275787738" duration="1585000" />
+      <workItem from="1738362574548" duration="2604000" />
+      <workItem from="1738435919065" duration="2876000" />
+      <workItem from="1738450045766" duration="7267000" />
     </task>
     <task id="LOCAL-00001" summary="Base commit">
       <option name="closed" value="true" />
@@ -316,7 +339,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736272064125</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="load button not working due duplication of the devices on canva while loading">
+      <option name="closed" value="true" />
+      <created>1736275997435</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1736275997435</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -333,14 +364,16 @@
     <MESSAGE value="Configure mode seems working" />
     <MESSAGE value="app without computer.py" />
     <MESSAGE value="Another day of debbuging" />
-    <option name="LAST_COMMIT_MESSAGE" value="Another day of debbuging" />
+    <MESSAGE value="load button not working due duplication of the devices on canva while loading" />
+    <option name="LAST_COMMIT_MESSAGE" value="load button not working due duplication of the devices on canva while loading" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/NetworkDesigner$screentest.coverage" NAME="screentest Coverage Results" MODIFIED="1736175428986" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$interfaceapp.coverage" NAME="interfaceapp Coverage Results" MODIFIED="1736075581704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$main.coverage" NAME="main Coverage Results" MODIFIED="1736114010820" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$screen.coverage" NAME="screen Coverage Results" MODIFIED="1736191156449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main_screen__1_.coverage" NAME="main_screen (1) Coverage Results" MODIFIED="1736291191341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/NetworkDesigner$mac.coverage" NAME="mac Coverage Results" MODIFIED="1736073262048" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/NetworkDesigner$main_screen.coverage" NAME="main_screen Coverage Results" MODIFIED="1736275901952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/NetworkDesigner$main_screen.coverage" NAME="main_screen Coverage Results" MODIFIED="1738458834548" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
   </component>
 </project>

@@ -1,0 +1,1 @@
+Only library required to launch application is PyQt6.

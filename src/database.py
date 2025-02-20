@@ -1,10 +1,4 @@
 import sqlite3
-import os
-from PyQt6.QtWidgets import QFileDialog, QMessageBox
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPen
-import controller
-import shutil
 
 class Database:
     connection = None
@@ -41,19 +35,17 @@ class Database:
                     port_number INTEGER,
                     mac_address TEXT UNIQUE,
                     vlan TEXT,
-                    port_type TEXT CHECK(port_type IN ('access', 'trunk')),
+                    port_type TEXT CHECK(port_type IN ('access', 'trunk', 'not set')),
                     PRIMARY KEY (device_id, port_number),
                     FOREIGN KEY (device_id) REFERENCES devices(device_id)
                 );
-
                 CREATE TABLE IF NOT EXISTS computer_ports (
                     device_id INTEGER PRIMARY KEY,
                     mac_address TEXT UNIQUE,
                     ip_address TEXT,
                     subnet_mask TEXT,
                     FOREIGN KEY (device_id) REFERENCES devices(device_id)
-                );
-
+                );  
                 CREATE TABLE IF NOT EXISTS connections (
                     connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
                     device1_id INTEGER,
@@ -146,7 +138,7 @@ class Database:
             )
         ''', (mac_address,))
         return bool(Database.cursor.fetchone()[0])
-    
+
     @staticmethod
     def insert_device(device_id, mac_address, device_type, x, y):
         Database.cursor.execute(
@@ -154,7 +146,7 @@ class Database:
             (device_id, mac_address, device_type, x, y)
         )
         Database.connection.commit()
-    
+
     @staticmethod
     def insert_port_router(device_id, port_number, mac_address, ip_address=None, subnet_mask=None, vlan=None):
         Database.cursor.execute('''
@@ -164,20 +156,20 @@ class Database:
         Database.connection.commit()
 
     @staticmethod
+    def insert_port_computer(device_id, mac_address, ip_address=None, subnet_mask=None):
+        Database.cursor.execute('''
+                INSERT INTO computer_ports (device_id, mac_address, ip_address, subnet_mask)
+                VALUES (?, ?, ?, ?)
+            ''', (device_id, mac_address, ip_address, subnet_mask))
+        Database.connection.commit()
+
+    @staticmethod
     def insert_port_switch(device_id, port_number, mac_address, vlan=None, port_type=None):
         Database.cursor.execute('''
             INSERT INTO switch_ports (device_id, port_number, mac_address, vlan, port_type)
             VALUES (?, ?, ?, ?, ?)
         ''', (device_id, port_number, mac_address, vlan, port_type))
         Database.connection.commit()
-
-    # @staticmethod
-    # def insert_port_computer(device_id, mac_address, ip_address=None, subnet_mask=None):
-    #     Database.cursor.execute('''
-    #         INSERT INTO computer_ports (device_id, mac_address, ip_address, subnet_mask)
-    #         VALUES (?, ?, ?, ?)
-    #     ''', (device_id, mac_address, ip_address, subnet_mask))
-    #     Database.connection.commit()
 
     @staticmethod
     def update_port_router(device_id, port_number, ip_address=None, subnet_mask=None, vlan=None):
@@ -200,15 +192,15 @@ class Database:
         ''', (vlan, port_type, device_id, port_number))
         Database.connection.commit()
 
-    # @staticmethod
-    # def update_port_computer(device_id, ip_address=None, subnet_mask=None):
-    #     Database.cursor.execute('''
-    #         UPDATE computer_ports
-    #         SET ip_address = ?,
-    #             subnet_mask = ?
-    #         WHERE device_id = ?
-    #     ''', (ip_address, subnet_mask, device_id))
-    #     Database.connection.commit()
+    @staticmethod
+    def update_port_computer(device_id, ip_address=None, subnet_mask=None):
+        Database.cursor.execute('''
+            UPDATE computer_ports
+            SET ip_address = ?,
+                subnet_mask = ?
+            WHERE device_id = ?
+        ''', (ip_address, subnet_mask, device_id))
+        Database.connection.commit()
 
     @staticmethod
     def clear_all_tables():
@@ -219,134 +211,7 @@ class Database:
         Database.cursor.execute('DELETE FROM connections')
         Database.connection.commit()
 
-    
     @staticmethod
     def get_devices():
         Database.cursor.execute("SELECT * FROM devices")
         return Database.cursor.fetchall()
-
-
-class File:
-
-    # def load_database_file(self):
-    #     try:
-    #         file_dialog = QFileDialog()
-    #         file_dialog.setNameFilter("Database files (*.db)")
-    #         file_dialog.setDefaultSuffix("db")
-    #
-    #         if file_dialog.exec():
-    #             selected_files = file_dialog.selectedFiles()
-    #             if selected_files:
-    #                 source_db_path = selected_files[0]
-    #                 if Database.connection:
-    #                     Database.connection.close()
-    #                     Database.connection = None
-    #                 if os.path.exists("network.db"):
-    #                     os.remove("network.db")
-    #                 shutil.copy(source_db_path, "network.db")
-    #                 Database.initialize()
-    #                 Database.cursor.execute("SELECT COUNT(*) FROM devices")
-    #                 device_count = Database.cursor.fetchone()[0]
-    #                 if device_count == 0:
-    #                     QMessageBox.warning(
-    #                         None,
-    #                         "Error",
-    #                         "No devices found in the selected database file."
-    #                     )
-    #                     return False
-    #
-    #                 controller.Controller.scene.clear()
-    #                 controller.devices.clear()
-    #                 controller.Device.devices_to_connect.clear()
-    #
-    #                 devices = Database.get_devices()
-    #                 device_map = {}
-    #
-    #                 for device in devices:
-    #                     device_id, mac_address, device_type, x, y = device
-    #                     try:
-    #                         new_device = controller.Device(device_type, x, y, controller.Controller.scene)
-    #                         device_map[device_id] = new_device
-    #                     except Exception as e:
-    #                         print(f"Error creating device {device_id}: {e}")
-    #
-    #                 connections = Database.cursor.execute("SELECT * FROM connections").fetchall()
-    #                 for connection in connections:
-    #                     conn_id, device1_id, device2_id, device1_port, device2_port = connection
-    #                     if device1_id in device_map and device2_id in device_map:
-    #                         device1 = device_map[device1_id]
-    #                         device2 = device_map[device2_id]
-    #
-    #                         start_x = device1.x + 25
-    #                         start_y = device1.y + 25
-    #                         end_x = device2.x + 25
-    #                         end_y = device2.y + 25
-    #                         line = controller.Controller.scene.addLine(start_x, start_y, end_x, end_y)
-    #                         pen = QPen(Qt.GlobalColor.black)
-    #                         pen.setWidth(2)
-    #                         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-    #                         pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
-    #                         pen.setStyle(Qt.PenStyle.SolidLine)
-    #                         line.setPen(pen)
-    #                         line.setZValue(2)
-    #
-    #                 controller.Controller.main_canva.viewport().update()
-    #                 QMessageBox.information(
-    #                     None,
-    #                     "Success",
-    #                     f"Successfully loaded {len(devices)} devices and {len(connections)} connections."
-    #                 )
-    #                 return True
-    #     except Exception as e:
-    #         QMessageBox.critical(
-    #             None,
-    #             "Error",
-    #             f"Failed to load network configuration: {str(e)}"
-    #         )
-    #         Database.initialize(clear=True)
-    #         return False
-
-    def save_database_file(self):
-        try:
-            if not Database.connection:
-                QMessageBox.warning(None, "Error", "No active database connection.")
-                return False
-
-            file_dialog = QFileDialog()
-            file_dialog.setAcceptMode(QFileDialog.AcceptMode.AcceptSave)
-            file_dialog.setNameFilter("Database files (*.db)")
-            file_dialog.setDefaultSuffix("db")
-            if file_dialog.exec():
-                selected_files = file_dialog.selectedFiles()
-                if selected_files:
-                    destination_path = selected_files[0]
-                    Database.connection.commit()
-                    Database.connection.close()
-                    Database.connection = None
-                    try:
-                        import shutil
-                        shutil.copy2('network.db', destination_path)
-                        QMessageBox.information(
-                            None,
-                            "Success",
-                            "Network configuration saved successfully!"
-                        )
-                        return True
-                    except Exception as e:
-                        QMessageBox.critical(
-                            None,
-                            "Error",
-                            f"Failed to save database file: {str(e)}"
-                        )
-                        return False
-
-                    finally:
-                        Database.initialize()
-
-        except Exception as e:
-            QMessageBox.critical(
-                None,
-                "Error",
-                f"Error during save operation: {str(e)}"
-            )
-            return False

@@ -1,37 +1,182 @@
-from PyQt6.QtWidgets import (QDialog, QVBoxLayout, QLabel, QLineEdit,
-                             QPushButton, QComboBox, QMessageBox, QGridLayout,
-                             QSpinBox, QTabWidget, QWidget, QTableWidget,
-                             QTableWidgetItem, QHeaderView)
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QDialog, QVBoxLayout,
+                            QPushButton, QComboBox, QMessageBox,
+                            QWidget, QTableWidget,
+                            QTableWidgetItem, QHeaderView)
 from database import Database
+from network_validator import NetworkValidator
 
 
 class PortInfoTab(QWidget):
     def __init__(self, device_instance):
         super().__init__()
         self.device_instance = device_instance
-        layout = QVBoxLayout()
+        self.port_type_combos = {}
+        self.validator = NetworkValidator()
+        self.setup_ui()
 
+    def setup_ui(self):
+        layout = QVBoxLayout()
         self.table = QTableWidget()
-        self.table.setColumnCount(4)
-        self.table.setHorizontalHeaderLabels(["Port", "Connected To", "MAC Address", "Configuration"])
+
+        if self.device_instance.device_type == "router":
+            self.table.setColumnCount(6)
+            self.table.setHorizontalHeaderLabels(
+                ["Port", "Connected To", "MAC Address", "IP Address", "Subnet Mask", "VLAN"]
+            )
+        elif self.device_instance.device_type == "switch":
+            self.table.setColumnCount(5)
+            self.table.setHorizontalHeaderLabels(
+                ["Port", "Connected To", "MAC Address", "VLAN", "Port Type"]
+            )
+        elif self.device_instance.device_type == "computer":
+            self.table.setColumnCount(5)
+            self.table.setHorizontalHeaderLabels(
+                ["Port", "Connected To", "MAC Address", "IP Address", "Subnet Mask"]
+            )
+
+        self.table.verticalHeader().setVisible(False)
         header = self.table.horizontalHeader()
-        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
-        header.setSectionResizeMode(3, QHeaderView.ResizeMode.Stretch)
+        for col in range(self.table.columnCount()):
+            header.setSectionResizeMode(col, QHeaderView.ResizeMode.Stretch)
 
         self.populate_port_info()
         layout.addWidget(self.table)
+
+        save_button = QPushButton("Save Configuration")
+        save_button.clicked.connect(self.save_configuration)
+        layout.addWidget(save_button)
+
         self.setLayout(layout)
+
+    def add_port_row(self, row, port_num, connected_to, mac, ip, subnet, vlan=None, port_type=None):
+        try:
+            # Create items for first 3 columns and make them non-editable
+            port_item = QTableWidgetItem(str(port_num))
+            port_item.setFlags(port_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+            self.table.setItem(row, 0, port_item)
+
+            connected_to_item = QTableWidgetItem(connected_to)
+            connected_to_item.setFlags(connected_to_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+            self.table.setItem(row, 1, connected_to_item)
+
+            mac_item = QTableWidgetItem(mac)
+            mac_item.setFlags(mac_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
+            self.table.setItem(row, 2, mac_item)
+
+            if self.device_instance.device_type in ["router", "computer"]:
+                ip_item = QTableWidgetItem(ip)
+                subnet_item = QTableWidgetItem(subnet)
+
+                ip_item.setFlags(ip_item.flags() | Qt.ItemFlag.ItemIsEditable)
+                subnet_item.setFlags(subnet_item.flags() | Qt.ItemFlag.ItemIsEditable)
+
+                self.table.setItem(row, 3, ip_item)
+                self.table.setItem(row, 4, subnet_item)
+
+                if self.device_instance.device_type == "router":
+                    vlan_item = QTableWidgetItem(vlan)
+                    vlan_item.setFlags(vlan_item.flags() | Qt.ItemFlag.ItemIsEditable)
+                    self.table.setItem(row, 5, vlan_item)
+
+            elif self.device_instance.device_type == "switch":
+                vlan_item = QTableWidgetItem(vlan)
+                vlan_item.setFlags(vlan_item.flags() | Qt.ItemFlag.ItemIsEditable)
+                self.table.setItem(row, 3, vlan_item)
+
+                combo = QComboBox()
+                combo.addItems(['access', 'trunk'])
+                if port_type in ['access', 'trunk']:
+                    combo.setCurrentText(port_type)
+                else:
+                    combo.setCurrentText('trunk')
+
+                self.port_type_combos[row] = combo
+                self.table.setCellWidget(row, 4, combo)
+
+        except Exception as e:
+            print(f"Error adding row: {e}")
 
     def populate_port_info(self):
         device_id = self.device_instance.device_id
         device_type = self.device_instance.device_type
         connections = Database.get_device_connections(device_id)
-        # if device_type == "computer":
-        #     self.populate_computer_ports(connections)
-        if device_type == "router":
-            self.populate_router_ports(connections)
+
+        if device_type == "computer":
+            self.table.setRowCount(1)
+            port_info = Database.cursor.execute(
+                "SELECT mac_address, ip_address, subnet_mask FROM computer_ports WHERE device_id = ?",
+                (device_id,)
+            ).fetchone()
+
+            if port_info:
+                mac = port_info[0] if port_info[0] else "N/A"
+                ip = port_info[1] if port_info[1] else "Not set"
+                subnet = port_info[2] if port_info[2] else "Not set"
+            else:
+                mac, ip, subnet = "N/A", "Not set", "Not set"
+
+            connected_to = "Not connected"
+            for conn in connections:
+                if conn[1] == device_id:
+                    other_id = conn[2]
+                else:
+                    other_id = conn[1]
+                other_type = self.get_device_info(other_id)
+                if other_type:
+                    connected_to = f"{other_type.capitalize()} (ID: {other_id})"
+
+            self.add_port_row(0, 1, connected_to, mac, ip, subnet)
+
+        elif device_type == "router":
+            self.table.setRowCount(4)
+            port_info = Database.cursor.execute(
+                "SELECT port_number, mac_address, ip_address, subnet_mask, vlan FROM router_ports WHERE device_id = ?",
+                (device_id,)
+            ).fetchall()
+
+            port_dict = {row[0]: row[1:] for row in port_info}
+            for port_num in range(1, 5):
+                connected_to = "Not connected"
+                for conn in connections:
+                    if (conn[1] == device_id and conn[3] == port_num) or (conn[2] == device_id and conn[4] == port_num):
+                        other_id = conn[2] if conn[1] == device_id else conn[1]
+                        other_type = self.get_device_info(other_id)
+                        if other_type:
+                            connected_to = f"{other_type.capitalize()} (ID: {other_id})"
+
+                if port_num in port_dict:
+                    mac, ip, subnet, vlan = port_dict[port_num]
+                else:
+                    mac = f"00:00:00:00:{device_id:02x}:{port_num:02x}"
+                    ip, subnet, vlan = "Not set", "Not set", "Not set"
+
+                self.add_port_row(port_num - 1, port_num, connected_to, mac, ip, subnet, vlan)
+
         elif device_type == "switch":
-            self.populate_switch_ports(connections)
+            self.table.setRowCount(8)
+            port_info = Database.cursor.execute(
+                "SELECT port_number, mac_address, vlan, port_type FROM switch_ports WHERE device_id = ?",
+                (device_id,)
+            ).fetchall()
+
+            port_dict = {row[0]: row[1:] for row in port_info}
+            for port_num in range(1, 9):
+                connected_to = "Not connected"
+                for conn in connections:
+                    if (conn[1] == device_id and conn[3] == port_num) or (conn[2] == device_id and conn[4] == port_num):
+                        other_id = conn[2] if conn[1] == device_id else conn[1]
+                        other_type = self.get_device_info(other_id)
+                        if other_type:
+                            connected_to = f"{other_type.capitalize()} (ID: {other_id})"
+
+                if port_num in port_dict:
+                    mac, vlan, port_type = port_dict[port_num]
+                else:
+                    mac = f"00:00:00:00:{device_id:02x}:{port_num:02x}"
+                    vlan, port_type = "Not set", "trunk"
+
+                self.add_port_row(port_num - 1, port_num, connected_to, mac, "N/A", "N/A", vlan, port_type)
 
     def get_device_info(self, device_id):
         return Database.cursor.execute(
@@ -39,205 +184,67 @@ class PortInfoTab(QWidget):
             (device_id,)
         ).fetchone()[0]
 
-    # def populate_computer_ports(self, connections):
-    #     self.table.setRowCount(1)
-    #     port_info = Database.cursor.execute(
-    #         "SELECT mac_address, ip_address, subnet_mask FROM computer_ports WHERE device_id = ?",
-    #         (self.device_instance.device_id,)
-    #     ).fetchone()
-    #
-    #     if port_info:
-    #         mac, ip, subnet = port_info
-    #         config_str = f"IP: {ip if ip else 'Not set'}\nSubnet: {subnet if subnet else 'Not set'}"
-    #     else:
-    #         mac, config_str = "N/A", "Not configured"
-    #
-    #     connected_to = "Not connected"
-    #     if connections:
-    #         for conn in connections:
-    #             other_device_id = conn[2] if conn[1] == self.device_instance.device_id else conn[1]
-    #             other_device_type = self.get_device_info(other_device_id)
-    #             connected_to = f"{other_device_type.capitalize()} (ID: {other_device_id})"
-    #
-    #     self.add_port_row(0, 1, connected_to, mac, config_str)
+    def save_configuration(self):
+        try:
+            device_id = self.device_instance.device_id
 
-    def populate_router_ports(self, connections):
-        self.table.setRowCount(4)
-        port_info = Database.cursor.execute(
-            "SELECT port_number, mac_address, ip_address, subnet_mask, vlan FROM router_ports WHERE device_id = ?",
-            (self.device_instance.device_id,)
-        ).fetchall()
-        port_dict = {row[0]: row[1:] for row in port_info}
-        conn_dict = {}
-        for conn in connections:
-            if conn[1] == self.device_instance.device_id:
-                conn_dict[conn[3]] = conn[2]
-            else:
-                conn_dict[conn[4]] = conn[1]
-        for port_num in range(1, 5):
-            connected_to = "Not connected"
-            if port_num in conn_dict:
-                other_device_id = conn_dict[port_num]
-                other_device_type = self.get_device_info(other_device_id)
-                connected_to = f"{other_device_type.capitalize()} (ID: {other_device_id})"
-            if port_num in port_dict:
-                mac, ip, subnet, vlan = port_dict[port_num]
-                config_str = f"IP: {ip if ip else 'Not set'}\nSubnet: {subnet if subnet else 'Not set'}\nVLAN: {vlan if vlan else 'Not set'}"
-            else:
-                mac, config_str = "N/A", "Not configured"
-            self.add_port_row(port_num - 1, port_num, connected_to, mac, config_str)
+            if self.device_instance.device_type == "switch":
+                for row in range(self.table.rowCount()):
+                    port_number = int(self.table.item(row, 0).text())
+                    vlan = self.table.item(row, 3).text() if self.table.item(row, 3) else "Not set"
 
-    def populate_switch_ports(self, connections):
-        self.table.setRowCount(8)
-        port_info = Database.cursor.execute(
-            "SELECT port_number, mac_address, vlan, port_type FROM switch_ports WHERE device_id = ?",
-            (self.device_instance.device_id,)
-        ).fetchall()
-        port_dict = {row[0]: row[1:] for row in port_info}
-        conn_dict = {}
-        for conn in connections:
-            if conn[1] == self.device_instance.device_id:
-                conn_dict[conn[3]] = conn[2]
-            else:
-                conn_dict[conn[4]] = conn[1]
-        for port_num in range(1, 9):
-            connected_to = "Not connected"
-            if port_num in conn_dict:
-                other_device_id = conn_dict[port_num]
-                other_device_type = self.get_device_info(other_device_id)
-                connected_to = f"{other_device_type.capitalize()} (ID: {other_device_id})"
-            if port_num in port_dict:
-                mac, vlan, port_type = port_dict[port_num]
-                config_str = f"Type: {port_type if port_type else 'Not set'}\nVLAN: {vlan if vlan else 'Not set'}"
-            else:
-                mac, config_str = "N/A", "Not configured"
-            self.add_port_row(port_num - 1, port_num, connected_to, mac, config_str)
+                    combo = self.port_type_combos.get(row)
+                    port_type = combo.currentText() if combo else 'trunk'
 
-    def add_port_row(self, row, port_num, connected_to, mac, config):
-        self.table.setItem(row, 0, QTableWidgetItem(str(port_num)))
-        self.table.setItem(row, 1, QTableWidgetItem(connected_to))
-        self.table.setItem(row, 2, QTableWidgetItem(mac))
-        self.table.setItem(row, 3, QTableWidgetItem(config))
+                    exists = Database.cursor.execute(
+                        "SELECT 1 FROM switch_ports WHERE device_id = ? AND port_number = ?",
+                        (device_id, port_number)
+                    ).fetchone()
+
+                    if exists:
+                        Database.update_port_switch(device_id, port_number, vlan, port_type)
+                    else:
+                        mac_address = f"00:00:00:00:{device_id:02x}:{port_number:02x}"
+                        Database.insert_port_switch(device_id, port_number, mac_address, vlan, port_type)
+
+            elif self.device_instance.device_type == "computer":
+                ip_address = self.table.item(0, 3).text() if self.table.item(0, 3) else "Not set"
+                subnet_mask = self.table.item(0, 4).text() if self.table.item(0, 4) else "Not set"
+
+                exists = Database.cursor.execute(
+                    "SELECT 1 FROM computer_ports WHERE device_id = ?",
+                    (device_id,)
+                ).fetchone()
+
+                if exists:
+                    Database.update_port_computer(device_id, ip_address, subnet_mask)
+                else:
+                    mac_address = f"00:00:00:00:00:{device_id:02x}"
+                    Database.insert_port_computer(device_id, mac_address, ip_address, subnet_mask)
+
+            elif self.device_instance.device_type == "router":
+                for row in range(self.table.rowCount()):
+                    port_number = int(self.table.item(row, 0).text())
+                    ip_address = self.table.item(row, 3).text() if self.table.item(row, 3) else "Not set"
+                    subnet_mask = self.table.item(row, 4).text() if self.table.item(row, 4) else "Not set"
+                    vlan = self.table.item(row, 5).text() if self.table.item(row, 5) else "Not set"
+                    Database.update_port_router(device_id, port_number, ip_address, subnet_mask, vlan)
+
+            QMessageBox.information(self, "Success", "Configuration saved successfully.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to save configuration: {str(e)}")
 
 class ConfigurationDialog(QDialog):
     def __init__(self, device_instance, parent=None):
         super().__init__(parent)
         self.device_instance = device_instance
-        self.setWindowTitle(f"Configure {device_instance.device_type.capitalize()}")
+        self.setWindowTitle(f"Konfiguracja {device_instance.device_type.capitalize()}")
         self.setup_ui()
         self.setMinimumWidth(600)
         self.setMinimumHeight(400)
 
     def setup_ui(self):
         layout = QVBoxLayout()
-        tab_widget = QTabWidget()
-        config_tab = QWidget()
-        config_layout = QVBoxLayout()
-        # if self.device_instance.device_type == "computer":
-        #     self.setup_computer_config(config_layout)
-        if self.device_instance.device_type == "router":
-            self.setup_router_config(config_layout)
-        elif self.device_instance.device_type == "switch":
-            self.setup_switch_config(config_layout)
-        config_tab.setLayout(config_layout)
         port_info_tab = PortInfoTab(self.device_instance)
-        tab_widget.addTab(config_tab, "Configuration")
-        tab_widget.addTab(port_info_tab, "Port Information")
-
-        layout.addWidget(tab_widget)
+        layout.addWidget(port_info_tab)
         self.setLayout(layout)
-
-    # def setup_computer_config(self, layout):
-    #     grid = QGridLayout()
-    #     grid.addWidget(QLabel("IP Address:"), 0, 0)
-    #     self.ip_input = QLineEdit()
-    #     grid.addWidget(self.ip_input, 0, 1)
-    #     grid.addWidget(QLabel("Subnet Mask:"), 1, 0)
-    #     self.subnet_input = QLineEdit()
-    #     grid.addWidget(self.subnet_input, 1, 1)
-    #     layout.addLayout(grid)
-    #     apply_btn = QPushButton("Apply Configuration")
-    #     apply_btn.clicked.connect(self.apply_computer_config)
-    #     layout.addWidget(apply_btn)
-
-    def setup_router_config(self, layout):
-        grid = QGridLayout()
-        grid.addWidget(QLabel("Port:"), 0, 0)
-        self.port_select = QSpinBox()
-        self.port_select.setMinimum(1)
-        self.port_select.setMaximum(self.device_instance.number_of_ports)
-        grid.addWidget(self.port_select, 0, 1)
-
-        grid.addWidget(QLabel("IP Address:"), 1, 0)
-        self.ip_input = QLineEdit()
-        grid.addWidget(self.ip_input, 1, 1)
-
-        grid.addWidget(QLabel("Subnet Mask:"), 2, 0)
-        self.subnet_input = QLineEdit()
-        grid.addWidget(self.subnet_input, 2, 1)
-
-        grid.addWidget(QLabel("VLAN ID:"), 3, 0)
-        self.vlan_input = QLineEdit()
-        grid.addWidget(self.vlan_input, 3, 1)
-
-        layout.addLayout(grid)
-        apply_btn = QPushButton("Apply Configuration")
-        apply_btn.clicked.connect(self.apply_router_config)
-        layout.addWidget(apply_btn)
-
-    def setup_switch_config(self, layout):
-        grid = QGridLayout()
-        grid.addWidget(QLabel("Port:"), 0, 0)
-        self.port_select = QSpinBox()
-        self.port_select.setMinimum(1)
-        self.port_select.setMaximum(self.device_instance.number_of_ports)
-        grid.addWidget(self.port_select, 0, 1)
-        grid.addWidget(QLabel("Port Type:"), 1, 0)
-        self.port_type = QComboBox()
-        self.port_type.addItems(["access", "trunk"])
-        grid.addWidget(self.port_type, 1, 1)
-        grid.addWidget(QLabel("VLAN IDs (comma-separated):"), 2, 0)
-        self.vlan_input = QLineEdit()
-        grid.addWidget(self.vlan_input, 2, 1)
-        layout.addLayout(grid)
-        apply_btn = QPushButton("Apply Configuration")
-        apply_btn.clicked.connect(self.apply_switch_config)
-        layout.addWidget(apply_btn)
-
-    # def apply_computer_config(self):
-    #     ip_address = self.ip_input.text()
-    #     subnet_mask = self.subnet_input.text()
-    #
-    #     if self.device_instance.set_interface_computer(ip_address, subnet_mask):
-    #         QMessageBox.information(self, "Success", "Configuration applied successfully")
-    #         self.accept()
-    #     else:
-    #         QMessageBox.warning(self, "Error", "Invalid IP address or subnet mask")
-
-    def apply_router_config(self):
-        port = self.port_select.value()
-        ip_address = self.ip_input.text()
-        subnet_mask = self.subnet_input.text()
-        vlan_id = self.vlan_input.text()
-        if  0 < int(vlan_id) <= 4096 and self.device_instance.set_interface_router(port, ip_address, subnet_mask, vlan_id):
-            QMessageBox.information(self, "Success", "Configuration applied successfully")
-            self.accept()
-        else:
-
-            QMessageBox.warning(self, "Error", "Invalid configuration parameters")
-
-    def apply_switch_config(self):
-        port = self.port_select.value()
-        port_type = self.port_type.currentText()
-        try:
-            vlans = [int(v.strip()) for v in self.vlan_input.text().split(',') if v.strip()]
-            if self.device_instance.set_interface_switch(port, vlans, port_type):
-                QMessageBox.information(self, "Success", "Configuration applied successfully")
-                self.accept()
-            else:
-                raise ValueError()
-        except ValueError:
-            QMessageBox.warning(self, "Error", "Invalid VLAN IDs")
-
-
-

@@ -11,7 +11,7 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QSizePolicy
 import sys
 from controller import Controller, Device
-from database import Database, File
+from database import Database
 
 
 
@@ -75,24 +75,24 @@ class Ui_MainWindow(object):
         self.label_2.setObjectName("label_2")
         self.verticalLayout.addWidget(self.label_2)
 
-        # self.computer_icon = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
-        # self.computer_icon.setIcon(QIcon("icons/computer.png"))
-        # self.computer_icon.setIconSize(self.computer_icon.size())
-        # self.computer_icon.setObjectName("computer_icon")
-        # self.computer_icon.setStyleSheet("""
-        #     QPushButton {
-        #         border: none;
-        #         padding: 0;
-        #         background: transparent;
-        #         text-align: center;
-        #     }
-        # """)
-        # self.computer_icon.clicked.connect(lambda: Controller.picked_device("computer"))
-        # self.verticalLayout.addWidget(self.computer_icon)
-        # self.label_3 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
-        # self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
-        # self.label_3.setObjectName("label_3")
-        # self.verticalLayout.addWidget(self.label_3)
+        self.computer_icon = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
+        self.computer_icon.setIcon(QIcon("icons/computer.png"))
+        self.computer_icon.setIconSize(self.computer_icon.size())
+        self.computer_icon.setObjectName("computer_icon")
+        self.computer_icon.setStyleSheet("""
+            QPushButton {
+                border: none;
+                padding: 0;
+                background: transparent;
+                text-align: center;
+            }
+        """)
+        self.computer_icon.clicked.connect(lambda: Controller.picked_device("computer"))
+        self.verticalLayout.addWidget(self.computer_icon)
+        self.label_3 = QtWidgets.QLabel(parent=self.verticalLayoutWidget)
+        self.label_3.setAlignment(QtCore.Qt.AlignmentFlag.AlignHCenter|QtCore.Qt.AlignmentFlag.AlignTop)
+        self.label_3.setObjectName("label_3")
+        self.verticalLayout.addWidget(self.label_3)
 
         self.connectButton = QtWidgets.QPushButton(parent=self.verticalLayoutWidget)
         self.connectButton.setText("Connect Devices")
@@ -120,18 +120,18 @@ class Ui_MainWindow(object):
         self.configure_mode = QtWidgets.QRadioButton(parent=self.horizontalLayoutWidget)
         self.configure_mode.setObjectName("configure_mode")
         self.horizontalLayout.addWidget(self.configure_mode)
-        self.test_mode = QtWidgets.QRadioButton(parent=self.horizontalLayoutWidget)
-        self.test_mode.setObjectName("test_mode")
-        self.horizontalLayout.addWidget(self.test_mode)
-        self.save_button = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.save_button.setGeometry(QtCore.QRect(700, 540, 93, 28))
-        self.save_button.setObjectName("save_button")
-        self.save_button.clicked.connect(File.save_database_file)
-        self.load_button = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.load_button.setGeometry(QtCore.QRect(600, 540, 93, 28))
-        self.load_button.setObjectName("load_button")
-        self.load_button.isEnabled()
-        #self.load_button.clicked.connect(File.load_database_file)
+        # self.test_mode = QtWidgets.QRadioButton(parent=self.horizontalLayoutWidget)
+        # self.test_mode.setObjectName("test_mode")
+        # self.horizontalLayout.addWidget(self.test_mode)
+        # self.save_button = QtWidgets.QPushButton(parent=self.centralwidget)
+        # self.save_button.setGeometry(QtCore.QRect(700, 540, 93, 28))
+        # self.save_button.setObjectName("save_button")
+        # self.save_button.clicked.connect(File.save_database_file)
+        # self.load_button = QtWidgets.QPushButton(parent=self.centralwidget)
+        # self.load_button.setGeometry(QtCore.QRect(600, 540, 93, 28))
+        # self.load_button.setObjectName("load_button")
+        # self.load_button.isEnabled()
+        # #self.load_button.clicked.connect(File.load_database_file)
         self.bottom_canva = QtWidgets.QGraphicsView(parent=self.centralwidget)
         self.bottom_canva.setGeometry(QtCore.QRect(0, 530, 801, 51))
         self.bottom_canva.setStyleSheet("background-color: grey; border: 1px solid blue;")
@@ -155,8 +155,8 @@ class Ui_MainWindow(object):
         self.bottom_canva.raise_()
         self.verticalLayoutWidget.raise_()
         self.horizontalLayoutWidget.raise_()
-        self.save_button.raise_()
-        self.load_button.raise_()
+        # self.save_button.raise_()
+        # self.load_button.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(parent=MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -179,12 +179,12 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Devices:"))
         self.label.setText(_translate("MainWindow", "Router"))
         self.label_2.setText(_translate("MainWindow", "Switch"))
-        # self.label_3.setText(_translate("MainWindow", "Computer"))
+        self.label_3.setText(_translate("MainWindow", "Computer"))
         self.design_mode.setText(_translate("MainWindow", "Design"))
         self.configure_mode.setText(_translate("MainWindow", "Configure"))
-        self.test_mode.setText(_translate("MainWindow", "Test"))
-        self.save_button.setText(_translate("MainWindow", "save"))
-        self.load_button.setText(_translate("MainWindow", "load"))
+        # self.test_mode.setText(_translate("MainWindow", "Test"))
+        # self.save_button.setText(_translate("MainWindow", "save"))
+        # self.load_button.setText(_translate("MainWindow", "load"))
 
 
 
